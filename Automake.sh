@@ -80,19 +80,23 @@ install_auto(){
 
 	sed -i 's/pcdata(boardinfo.system or "?")/"ARMv8"/' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
-	make menuconfig
+	#make menuconfig
 
-	../
+	#../
 
-	./build.sh nanopi_r2s.mk
+	#./build.sh nanopi_r2s.mk
 
-	rm -rf ./artifact/
+	#rm -rf ./artifact/
 
-	mkdir -p ./artifact/
+	#mkdir -p ./artifact/
 
-	find ./out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
+        #find ./out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
 
-	find ./out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
+        #find ./out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
+	
+	#mkdir config
+	
+	#cp -r "./friendlywrt-rk3328/friendlywrt/.config"  "${HOME}/config"
 
         echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
 
