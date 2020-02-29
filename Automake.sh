@@ -1,12 +1,19 @@
 #!/bin/bash
-echo "全自动安装编译环境【仅用于R2S编译】"
-echo "全自动安装编译环境【仅用于R2S编译】"
-echo "全自动安装编译环境【仅用于R2S编译】"
-echo "全自动安装编译环境【仅用于R2S编译】"
-echo "即将开始执行"
-echo "即将开始执行"
-echo "即将开始执行"
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
 
+cd "$(
+    cd "$(dirname "$0")" || exit
+        pwd
+	)" || exit
+echo "全自动安装编译环境【仅用于R2S编译】"
+echo "全自动安装编译环境【仅用于R2S编译】"
+echo "全自动安装编译环境【仅用于R2S编译】"
+echo "全自动安装编译环境【仅用于R2S编译】"
+echo "即将开始执行"
+echo "即将开始执行"
+echo "即将开始执行"
+menu
 #fonts color
 Green="\033[32m"
 Red="\033[31m"
@@ -113,16 +120,15 @@ install_auto(){
     echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
 
 }
-chang_config(){
-
-
-
-}
-start_make(){
+list(){
+	case $1 in
+	*)
+		menu
+		;;
+	esac
 
 }
 menu() {
-
     update_sh
     echo -e "\t 全自动安装编译环境【仅用于R2S编译】 管理脚本 ${Red}[${shell_version}]${Font}"
     echo -e "\t---authored by Poplar---"
@@ -166,7 +172,7 @@ menu() {
         ;;
     esac
 }
-
+list "$1"
 
 #二次编译
 #-----------------------------------------------------------------------
