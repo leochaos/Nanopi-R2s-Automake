@@ -2,18 +2,8 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
-cd "$(
-    cd "$(dirname "$0")" || exit
-        pwd
-	)" || exit
-echo "全自动安装编译环境【仅用于R2S编译】"
-echo "全自动安装编译环境【仅用于R2S编译】"
-echo "全自动安装编译环境【仅用于R2S编译】"
 echo "全自动安装编译环境【仅用于R2S编译】"
 echo "即将开始执行"
-echo "即将开始执行"
-echo "即将开始执行"
-menu
 #fonts color
 Green="\033[32m"
 Red="\033[31m"
@@ -30,8 +20,6 @@ shell_version="V1.0-测试版"
 shell_mode="None"
 github_branch="master"
 
-
-
 judge() {
     if [[ 0 -eq $? ]]; then
         echo -e "${OK} ${GreenBG} $1 完成 ${Font}"
@@ -41,6 +29,7 @@ judge() {
         exit 1
     fi
 }
+cp -r ./lede/feeds.conf.default $Path/friendlywrt-rk3328/friendlywrt/
 
 install_auto(){
 	# Root
@@ -77,21 +66,21 @@ install_auto(){
 
 	#git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
 
-	cp -r ./lede/package/lean /home/test/friendlywrt-rk3328/friendlywrt/package
+	cp -r "./lede/package/lean" "${HOME}/friendlywrt-rk3328/friendlywrt/package"
 
 	#-----------------------------------------------------------------------
 	rm -rf ./friendlywrt-rk3328/friendlywrt/package/feeds.conf.default
 
-	cp -r ./lede/feeds.conf.default /home/test/friendlywrt-rk3328/friendlywrt/
+	cp -r "./lede/feeds.conf.default" "${HOME}/friendlywrt-rk3328/friendlywrt/"
 
 	#-----------------------------------------------------------------------
 	rm -rf ./friendlywrt-rk3328/friendlywrt/package/lean/v2ray
 
 	rm -rf ./friendlywrt-rk3328/friendlywrt/package/lean/v2ray-plugin
 
-	cp -r ./openwrt-package/package/v2ray /home/test/friendlywrt-rk3328/friendlywrt/package/lean 
+	cp -r "./openwrt-package/package/v2ray" "${HOME}/friendlywrt-rk3328/friendlywrt/package/lean" 
 
-	cp -r ./openwrt-package/package/v2ray-plugin /home/test/friendlywrt-rk3328/friendlywrt/package/lean
+	cp -r "./openwrt-package/package/v2ray-plugin" "${HOME}/friendlywrt-rk3328/friendlywrt/package/lean"
 
 	#-----------------------------------------------------------------------
 
