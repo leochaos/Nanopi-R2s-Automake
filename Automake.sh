@@ -5,11 +5,7 @@ echo "全自动安装编译环境【仅用于R2S编译】"
 echo "全自动安装编译环境【仅用于R2S编译】"
 echo "即将开始执行"
 echo "即将开始执行"
-echo "即将开始执行"
-
-# Root
-[[ $(id -u) = 0 ]] && echo -e "\n 哎呀……请不要使用 ${red}root ${none}用户运行 ${yellow}~(^_^) ${none}\n" && exit 1
-	
+echo "即将开始执行"	
 #sudo rm -rf /etc/apt/sources.list.d
 #更新源
 sudo apt-get update
