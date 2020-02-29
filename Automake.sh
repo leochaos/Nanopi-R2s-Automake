@@ -2,8 +2,6 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
-echo "全自动安装编译环境【仅用于R2S编译】"
-echo "即将开始执行"
 #fonts color
 Green="\033[32m"
 Red="\033[31m"
@@ -16,20 +14,10 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="V1.0-测试版"
+shell_version="V1.1-测试版"
 shell_mode="None"
 github_branch="master"
 
-judge() {
-    if [[ 0 -eq $? ]]; then
-        echo -e "${OK} ${GreenBG} $1 完成 ${Font}"
-        sleep 1
-    else
-        echo -e "${Error} ${RedBG} $1 失败${Font}"
-        exit 1
-    fi
-}
-cp -r ./lede/feeds.conf.default $Path/friendlywrt-rk3328/friendlywrt/
 
 install_auto(){
 	# Root
@@ -106,7 +94,7 @@ install_auto(){
 
 	find ./out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
 
-    echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
+        echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
 
 }
 list(){
@@ -121,13 +109,10 @@ menu() {
     update_sh
     echo -e "\t 全自动安装编译环境【仅用于R2S编译】 管理脚本 ${Red}[${shell_version}]${Font}"
     echo -e "\t---authored by Poplar---"
-    echo -e "\thttps://github.com/wulabing\n"
-    echo -e "\thttps://github.com/yangzifan89\n"    
+    echo -e "\thttps://github.com/yangzifan89/Nanopi-R2s-Automake\n"    
     echo -e "当前已安装版本:${shell_mode}\n"
     echo -e "${Green}请注意不要使用root用户登录执行此脚本！！！！${Font}\n"
     echo -e "${Green}请确保当前用户目录下空文件，系统推荐Ubuntu18.0.4TSL${Font}\n"
-    echo -e "—————————————————————————————————————"
-    echo -e "—————————————————————————————————————"
     echo -e "—————————————— 安装向导 ——————————————"
     echo -e "${Green}1.${Font}  全自动安装编译环境"
     echo -e "—————————————— 配置变更 ——————————————"
