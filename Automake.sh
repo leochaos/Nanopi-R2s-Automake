@@ -110,13 +110,13 @@ list(){
 
 }
 menu() {
-    update_sh
+    #update_sh
     echo -e "\t 全自动安装编译环境【仅用于R2S编译】 管理脚本 ${Red}[${shell_version}]${Font}"
     echo -e "\t---authored by Poplar---"
     echo -e "\thttps://github.com/yangzifan89/Nanopi-R2s-Automake\n"    
     echo -e "当前已安装版本:${shell_mode}\n"
-    echo -e "${Green}请注意不要使用root用户登录执行此脚本！！！！${Font}\n"
-    echo -e "${Green}请确保当前用户目录下空文件，系统推荐Ubuntu18.0.4TSL${Font}\n"
+    echo -e "${RedBG}请注意不要使用root用户登录执行此脚本！！！！${Font}\n"
+    echo -e "${RedBG}请确保当前用户目录下空文件，系统推荐Ubuntu18.0.4TSL${Font}\n"
     echo -e "—————————————— 安装向导 ——————————————"
     echo -e "${Green}1.${Font}  全自动安装编译环境"
     echo -e "—————————————— 配置变更 ——————————————"
