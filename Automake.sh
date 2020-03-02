@@ -94,7 +94,7 @@ install_auto(){
 	
 	menu
 }
-star_make(){
+start_make(){
 	cd ./friendlywrt-rk3328 
 
 	./build.sh nanopi_r2s.mk
@@ -109,19 +109,6 @@ star_make(){
 
 	echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
 
-}
-chang_config(){
-
-
-
-}
-start_make(){
-
-}
-list(){
-	*)
-	  menu
-	  ;;
 }
 list() {
     case $1 in
@@ -174,7 +161,7 @@ menu() {
         chang_config
         ;;
     4)
-        start_make
+        start_makes
         ;;
     0)
         exit 0
