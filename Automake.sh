@@ -110,6 +110,56 @@ start_make(){
 	echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
 
 }
+
+start_makes(){
+	#二次编译
+	#-----------------------------------------------------------------------
+	#更新L大源码
+	#cd ./lede
+	#git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream #更新源码
+	#./scripts/feeds update -a && ./scripts/feeds install -a #更新FEEDS
+	#rm -rf ./friendlywrt-rk3328/friendlywrt/package/feeds.conf.default  #删除原有feeds
+	#rm -rf ./friendlywrt-rk3328/friendlywrt/package/lean  #删除原有插件
+	#cp -r ./lede/lean ${HOME}/friendlywrt-rk3328/friendlywrt/lean  #复制新的插件到改目录
+	#cp -r ./lede/feeds.conf.default ${HOME}/friendlywrt-rk3328/friendlywrt/ #将新得feeds复制到friendlywrt
+	#cd ../ #回到根目录
+	#-----------------------------------------------------------------------
+	#更新package
+	#cd ./openwrt-package
+	#git remote add upstream https://github.com/Lienol/openwrt-package.git && git fetch upstream #更新源码
+	#cd ../ #回到根目录
+	#-----------------------------------------------------------------------
+	cd ./friendlywrt-rk3328/
+	#rm -rf ./tmp #清除缓存
+	cd ./friendlywrt
+	#rm -rf ./tmp #清除缓存
+	./scripts/feeds update -a && ./scripts/feeds install -a #更新FEEDS
+	sed -i '/Load Average/i\<tr><td width="33%"><%:CPU Temperature%></td><td><%=luci.sys.exec("cut -c1-2 /sys/class/thermal/thermal_zone0/temp")%></td></tr>' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+
+	sed -i 's/pcdata(boardinfo.system or "?")/"ARMv8"/' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+
+	#----------------------------------------------------------------------
+	#rm -rf .config #清除编译配置和缓存
+	#----------------------------------------------------------------------
+	make menuconfig #进入编译配置菜单
+	
+	cd ../
+	
+	cd ./friendlywrt-rk3328
+	
+	./build.sh nanopi_r2s.mk
+	
+	rm -rf ./artifact/
+
+	mkdir -p ./artifact/
+
+	find ./out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
+
+	find ./out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
+
+	echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
+}
+
 list() {
     case $1 in
     *)
@@ -161,7 +211,8 @@ menu() {
         chang_config
         ;;
     4)
-        start_makes
+        shell_mode="start_makes"
+	start_makes
         ;;
     0)
         exit 0
@@ -173,36 +224,7 @@ menu() {
 }
 list "$1"
 
-#二次编译
-#-----------------------------------------------------------------------
-#更新L大源码
-#cd ./lede
-#git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream #更新源码
-#./scripts/feeds update -a && ./scripts/feeds install -a #更新FEEDS
-#rm -rf ./friendlywrt-rk3328/friendlywrt/package/feeds.conf.default  #删除原有feeds
-#cp -r ./lede/feeds.conf.default /home/test/friendlywrt-rk3328/friendlywrt/ #将新得feeds复制到friendlywrt
-#cd ../ #回到根目录
-#-----------------------------------------------------------------------
-#更新package
-#cd ./openwrt-package
-#git remote add upstream https://github.com/Lienol/openwrt-package.git && git fetch upstream #更新源码
-#cd ../ #回到根目录
-#-----------------------------------------------------------------------
-#cd ./friendlywrt-rk3328/
-#rm -rf ./tmp #清除缓存
-#cd ./friendlywrt
-#rm -rf ./tmp #清除缓存
-#./scripts/feeds update -a && ./scripts/feeds install -a #更新FEEDS
-#sed -i '/Load Average/i\<tr><td width="33%"><%:CPU Temperature%></td><td><%=luci.sys.exec("cut -c1-2 /sys/class/thermal/thermal_zone0/temp")%></td></tr>' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
-#sed -i 's/pcdata(boardinfo.system or "?")/"ARMv8"/' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
-
-#----------------------------------------------------------------------
-###rm -rf .config 清除编译配置和缓存
-#----------------------------------------------------------------------
-#make menuconfig 进入编译配置菜单
-#../
-#./build.sh nanopi_r2s.mk
 
 #配置默认ip：vi ./friendlywrt-rk3328/friendlywrt/package/base-files/files/bin/config_generate
 #配置默认主题：222
