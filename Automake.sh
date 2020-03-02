@@ -62,7 +62,7 @@ install_auto(){
 
 	#git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
 
-	cp -r ./lede/package/lean /home/test/friendlywrt-rk3328/friendlywrt/package
+	cp -r ./lede/package/lean ${HOME}/friendlywrt-rk3328/friendlywrt/package
 
 	#-----------------------------------------------------------------------
 	rm -rf ./friendlywrt-rk3328/friendlywrt/package/feeds.conf.default
@@ -90,7 +90,14 @@ install_auto(){
 
 	make menuconfig
 
-	../
+	../../
+	
+	menu
+	
+	;;
+}
+star_make(){
+	cd ./friendlywrt-rk3328 
 
 	./build.sh nanopi_r2s.mk
 
@@ -102,7 +109,7 @@ install_auto(){
 
 	find ./out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
 
-    echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
+	echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
 
 }
 chang_config(){
@@ -129,13 +136,14 @@ menu() {
 	echo "                                                             "
 	echo "                                                             "	    
  	echo -e "—————————————— 【安装向导】 ——————————————"
-	echo -e "1.  全自动安装编译环境"
+	echo -e "1.        全自动安装编译环境"
+	echo -e "2.        开始编译         "	
 	echo -e "—————————————— 【配置变更】 ——————————————"
-	echo -e "2.  变更 config"
+	echo -e "3.        变更 config      "
 	echo "                                                             "
-	echo -e "3.  启动二次编译(自动拉取最新更新)"    
+	echo -e "4.        自动拉取最新更新(二次编译)                        "    
 	echo -e "——————————————   【退出】   ——————————————"   
-	echo -e "4.  退出 \n"
+	echo -e "0.        退出 \n                                         "
 
     read -rp "请输入数字：" menu_num
     case $menu_num in
@@ -147,14 +155,17 @@ menu() {
         install_auto
         ;;
     2)
+    	shell_mode="start_make"
+	start_make
+	;;
+    3)
         shell_mode="h2"
         chang_config
         ;;
-    3)
-        #bash <(curl -L -s https://install.direct/go.sh)
+    4)
         start_make
         ;;
-    4)
+    0)
         exit 0
         ;;
     *)
