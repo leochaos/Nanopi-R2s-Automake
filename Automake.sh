@@ -196,5 +196,5 @@ menu() {
 #./build.sh nanopi_r2s.mk
 
 #配置默认ip：vi ./friendlywrt-rk3328/friendlywrt/package/base-files/files/bin/config_generate
-#配置默认主题：
+#配置默认主题：222
 
