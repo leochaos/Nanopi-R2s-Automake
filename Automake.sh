@@ -1,7 +1,4 @@
 #!/bin/bash
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-export PATH
-
 #fonts color
 Green="\033[32m"
 Red="\033[31m"
@@ -14,10 +11,21 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="V1.1-测试版"
+shell_version="V1.0-测试版"
 shell_mode="None"
 github_branch="master"
 
+
+
+judge() {
+    if [[ 0 -eq $? ]]; then
+        echo -e "${OK} ${GreenBG} $1 完成 ${Font}"
+        sleep 1
+    else
+        echo -e "${Error} ${RedBG} $1 失败${Font}"
+        exit 1
+    fi
+}
 
 install_auto(){
 	# Root
@@ -54,21 +62,21 @@ install_auto(){
 
 	#git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
 
-	cp -r "./lede/package/lean" "${HOME}/friendlywrt-rk3328/friendlywrt/package"
+	cp -r ./lede/package/lean /home/test/friendlywrt-rk3328/friendlywrt/package
 
 	#-----------------------------------------------------------------------
 	rm -rf ./friendlywrt-rk3328/friendlywrt/package/feeds.conf.default
 
-	cp -r "./lede/feeds.conf.default" "${HOME}/friendlywrt-rk3328/friendlywrt/"
+	cp -r ./lede/feeds.conf.default ${HOME}/friendlywrt-rk3328/friendlywrt/
 
 	#-----------------------------------------------------------------------
 	rm -rf ./friendlywrt-rk3328/friendlywrt/package/lean/v2ray
 
 	rm -rf ./friendlywrt-rk3328/friendlywrt/package/lean/v2ray-plugin
 
-	cp -r "./openwrt-package/package/v2ray" "${HOME}/friendlywrt-rk3328/friendlywrt/package/lean" 
+	cp -r ./openwrt-package/package/v2ray ${HOME}/friendlywrt-rk3328/friendlywrt/package/lean 
 
-	cp -r "./openwrt-package/package/v2ray-plugin" "${HOME}/friendlywrt-rk3328/friendlywrt/package/lean"
+	cp -r ./openwrt-package/package/v2ray-plugin ${HOME}/friendlywrt-rk3328/friendlywrt/package/lean
 
 	#-----------------------------------------------------------------------
 
@@ -80,50 +88,54 @@ install_auto(){
 
 	sed -i 's/pcdata(boardinfo.system or "?")/"ARMv8"/' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
-	#make menuconfig
+	make menuconfig
 
-	#../
+	../
 
-	#./build.sh nanopi_r2s.mk
+	./build.sh nanopi_r2s.mk
 
-	#rm -rf ./artifact/
+	rm -rf ./artifact/
 
-	#mkdir -p ./artifact/
+	mkdir -p ./artifact/
 
-        #find ./out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
+	find ./out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
 
-        #find ./out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
-	
-	#mkdir config
-	
-	#cp -r "./friendlywrt-rk3328/friendlywrt/.config"  "${HOME}/config"
+	find ./out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
 
-        echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
+    echo -e "\t---编译完成啦！请到/artifact目录查看哟~~~---"   
 
 }
-list(){
-	case $1 in
-	*)
-		menu
-		;;
-	esac
+chang_config(){
+
+
+
+}
+start_make(){
 
 }
 menu() {
-    #update_sh
-    echo -e "\t 全自动安装编译环境【仅用于R2S编译】 管理脚本 ${Red}[${shell_version}]${Font}"
-    echo -e "\t---authored by Poplar---"
-    echo -e "\thttps://github.com/yangzifan89/Nanopi-R2s-Automake\n"    
-    echo -e "当前已安装版本:${shell_mode}\n"
-    echo -e "${Red}请注意不要使用root用户登录执行此脚本！！！！${Font}\n"
-    echo -e "${Red}请确保当前用户目录下空文件，系统推荐Ubuntu18.0.4TSL${Font}\n"
-    echo -e "—————————————— 安装向导 ——————————————"
-    echo -e "${Green}1.${Font}  全自动安装编译环境"
-    echo -e "—————————————— 配置变更 ——————————————"
-    echo -e "${Green}2.${Font}  变更 config"
-    echo -e "${Green}3.${Font}  启动二次编译(自动拉取最新更新)"    
-    echo -e "—————————————— 退出 ——————————————"   
-    echo -e "${Green}4.${Font} 退出 \n"
+
+    update_sh
+    echo
+	echo "#############################################################"
+	echo "# 全自动安装编译环境【仅用于R2S编译】 管理脚本                  #"
+	echo "# Author: Chikage <Poplar>                                  #"
+	echo "# Github: https://github.com/yangzifan89                    #"
+        echo "#请注意不要使用root用户登录执行此脚本                          #"
+        echo "#请确保当前用户目录下空文件,系统推荐 Ubuntu18.0.4TSL           #"
+        echo "#当前已安装版本:${shell_mode}                                #"
+	echo "#############################################################"
+	echo "                                                             "
+	echo "                                                             "
+	echo "                                                             "	    
+ 	echo -e "—————————————— 【安装向导】 ——————————————"
+	echo -e "1.  全自动安装编译环境"
+	echo -e "—————————————— 【配置变更】 ——————————————"
+	echo -e "2.  变更 config"
+	echo "                                                             "
+	echo -e "3.  启动二次编译(自动拉取最新更新)"    
+	echo -e "——————————————   【退出】   ——————————————"   
+	echo -e "4.  退出 \n"
 
     read -rp "请输入数字：" menu_num
     case $menu_num in
@@ -150,7 +162,7 @@ menu() {
         ;;
     esac
 }
-list "$1"
+
 
 #二次编译
 #-----------------------------------------------------------------------
@@ -185,5 +197,4 @@ list "$1"
 
 #配置默认ip：vi ./friendlywrt-rk3328/friendlywrt/package/base-files/files/bin/config_generate
 #配置默认主题：
-
 
