@@ -30,7 +30,8 @@ judge() {
 install_auto(){
 	# Root
 	[[ $(id -u) = 0 ]] && echo -e "\n 哎呀……请不要使用 ${red}root ${none}用户运行 ${yellow}~(^_^) ${none}\n" && exit 1
-	
+	git config --global user.email "auto@github.com"
+  	git config --global user.name "auto"
 	#sudo rm -rf /etc/apt/sources.list.d
 	#更新源
 	sudo apt-get update
