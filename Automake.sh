@@ -93,8 +93,6 @@ install_auto(){
 	cd ../../
 	
 	menu
-	
-	;;
 }
 star_make(){
 	cd ./friendlywrt-rk3328 
