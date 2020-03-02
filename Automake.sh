@@ -90,7 +90,7 @@ install_auto(){
 
 	make menuconfig
 
-	../../
+	cd ../../
 	
 	menu
 	
